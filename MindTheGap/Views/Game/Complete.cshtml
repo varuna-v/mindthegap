@@ -1,0 +1,9 @@
+﻿@model MindTheGap.Models.GameCompletionModel
+@{
+    ViewBag.Title = "Game Complete";
+}
+
+<h2>Game Complete</h2>
+@Model.NumberAnsweredCorrectly / @Model.NumberOfQuestions
+
+Total playing time: @Model.TotalDuration

@@ -12,11 +12,11 @@ namespace MindTheGap.Models
     {
         public string FromStation { get; set; }
         public string ToStation { get; set; }
-        public string ScheduledDepartureTimeFormatted { get; set; }
+        public string ScheduledDepartureTimeFormatted => ScheduledDepartureTime.ToString("HH:mm:ss");
         public DateTime ScheduledDepartureTime { get; set; }
-        public string EstimatedDepartureTimeFormatted { get; set; }
+        public string EstimatedDepartureTimeFormatted => EstimatedDepartureTime.ToString("HH:mm:ss");
         public DateTime EstimatedDepartureTime { get; set; }
-        public int DelayMinutes { get; set; }
+        public int DelayMinutes => (int) Math.Floor((EstimatedDepartureTime - ScheduledDepartureTime).TotalMinutes);
         public string RId { get; set; }
     }
 }

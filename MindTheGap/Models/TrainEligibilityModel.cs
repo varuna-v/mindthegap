@@ -15,12 +15,19 @@ namespace MindTheGap.Models
         public QuestionAnswerModel QuestionAnswer { get; set; }
         public TrainEligibilityModel TrainEligibilityModel { get; set; }
         public string SelectedAnswer { get; set; }
+        public DateTime StartedAt { get; set; }
     }
 
     public class QuestionAnswerModel
     {
         public string Question { get; set; }
         public List<AnswerModel> Answers { get; set; }
+    }
+
+    public class QuestionAnswerResponseModel : QuestionAnswerModel
+    {
+        public User User { get; set; }
+        public bool CorrectlyAnswered { get; set; }
     }
 
     public class AnswerModel
