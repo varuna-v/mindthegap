@@ -1,6 +1,36 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
 }
-<h2>Dashboard</h2>
+<style>
+    .keyimg {
+        display: block;
+        max-width: 140px;
+        width: auto;
+        height: auto;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-5 col-sm-7 text-left">
+            <h2>Dashboard</h2>
+        </div>
+        <div class="col-3 col-sm-3 text-right">
+            <img src="@Url.Content("~/Content/images/MindTheAppLogo.png")" class="keyimg"/>
+        </div>
+    </div>
+</div>
 
-<a href="@Url.Action("Index", "JourneySelection")">Select a journey</a>
+<br /><br />
+
+<div class="container">
+    <div class="col-12 colsm-7 text-left">
+        <a class="btn btn-success btn-lg btn-block" role="button" href="@Url.Action("Index", "JourneySelection")">Select a Journey</a>
+        <a class="btn btn-success btn-lg btn-block" role="button" href="@Url.Action("Index", "JourneySelection")">Late Trains</a>
+        <a class="btn btn-success btn-lg btn-block" role="button" href="@Url.Action("Index", "JourneySelection")">Current Active Journeys</a>
+        <a class="btn btn-success btn-lg btn-block" role="button" href="@Url.Action("Index", "JourneySelection")">Historic Late Trains</a>
+        <a class="btn btn-success btn-lg btn-block" role="button" href="@Url.Action("Index", "JourneySelection")">Leaderboard</a>
+    </div>
+    
+    
+
+</div>
