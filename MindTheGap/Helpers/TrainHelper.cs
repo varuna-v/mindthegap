@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using MindTheGap.LDBStaffWebService;
 using MindTheGap.Models;
 
@@ -10,6 +9,44 @@ namespace MindTheGap.Helpers
     public class TrainHelper
     {
         public List<TrainModel> GetTrains(JourneySelectionModel journey)
+        {
+            return new List<TrainModel>()
+            {
+                new TrainModel()
+                {
+                    FromStation = "MAN",
+                    ToStation = "MIA",
+                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 0, 30, 0),
+                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 0, 38, 0),
+                    RId = "123456"
+                },
+                new TrainModel()
+                {
+                    FromStation = "MAN",
+                    ToStation = "MIA",
+                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 0, 7, 0),
+                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 0, 9, 0),
+                    RId = "ABCDEF"
+                },
+                new TrainModel()
+                {
+                    FromStation = "MAN",
+                    ToStation = "MIA",
+                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 1, 10, 0),
+                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 1, 25, 0),
+                    RId = "HIJK"
+                },
+                new TrainModel()
+                {
+                    FromStation = "MAN",
+                    ToStation = "MIA",
+                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 2, 7, 0),
+                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 2, 45, 0),
+                    RId = "LMNO"
+                }
+            };
+        }
+        public List<TrainModel> GetRealTrains(JourneySelectionModel journey)
         {
             var client = new LDBSVServiceSoapClient();
             var accessToken = new AccessToken() { TokenValue = "e983e75e-d6c1-49c8-86ec-9031695222ad" };
@@ -34,11 +71,8 @@ namespace MindTheGap.Helpers
                 model.RId = trainService.rid;
                 model.FromStation = journey.FromStationCode;
                 model.ToStation = journey.ToStationCode;
-                model.EstimatedDepartureTimeFormatted = trainService.etd.ToString("HH:mm:ss");
                 model.EstimatedDepartureTime = trainService.etd;
-                model.ScheduledDepartureTimeFormatted = trainService.std.ToString("HH:mm:ss");
                 model.ScheduledDepartureTime = trainService.std;
-                model.DelayMinutes = (int)Math.Floor((trainService.etd - trainService.std).TotalMinutes);
                 result.Add(model);
             }
 

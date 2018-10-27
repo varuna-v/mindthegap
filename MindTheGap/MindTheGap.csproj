@@ -476,12 +476,15 @@
     </Compile>
     <Compile Include="Helpers\TrainHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="Models\GameCompletionModel.cs" />
+    <Compile Include="Models\GameHistory.cs" />
     <Compile Include="Models\JourneySelectionModel.cs" />
     <Compile Include="Models\TrainEligibilityModel.cs" />
     <Compile Include="Models\TrainModel.cs" />
     <Compile Include="Models\TrainStation.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GameHistoryRepository.cs" />
     <Compile Include="Repositories\QuestionAnswerRepository.cs" />
     <Compile Include="Repositories\TrainStationRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -499,6 +502,7 @@
     </Content>
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="scripts\jquery-3.0.0.min.map" />
+    <Content Include="Views\Game\Complete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
