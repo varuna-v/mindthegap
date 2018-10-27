@@ -1,0 +1,22 @@
+﻿@model MindTheGap.Models.JourneySelectionModel
+
+@{
+    ViewBag.Title = "Select Your Journey";
+}
+
+<h2>Select Your Journey</h2>
+
+<div>
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(x => x.FromStationCode)
+        @Html.DropDownListFor(x => x.FromStationCode,
+            (IEnumerable<SelectListItem>)ViewBag.AllStationList, new { @class = "form-control" })
+
+        @Html.LabelFor(x => x.ToStationCode)
+        @Html.DropDownListFor(x => x.ToStationCode,
+            (IEnumerable<SelectListItem>)ViewBag.AllStationList, new { @class = "form-control" })
+
+        <input type="submit" value="Go" />
+    }
+</div>

@@ -1,0 +1,36 @@
+﻿@model MindTheGap.Models.GamePlayModel
+
+@{
+    ViewBag.Title = "Play";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div>@ViewBag.ErrorMessage</div>
+}
+else
+{
+    <div>Time to train: <span id="timeToTrainClock"></span></div>
+    <div>Answer the question in: <span id="answerTheQuestionInClock"></span></div>
+
+    <div>@Model.QuestionAnswer.Question</div>
+    <button class="btn btn-outline-info" id="answer0" onclick="selectAnswer(0)">@Model.QuestionAnswer.Answers[0].Answer</button>
+    <button class="btn btn-outline-info" id="answer1" onclick="selectAnswer(1)">@Model.QuestionAnswer.Answers[1].Answer</button>
+    <button class="btn btn-outline-info" id="answer2" onclick="selectAnswer(2)">@Model.QuestionAnswer.Answers[2].Answer</button>
+    <button class="btn btn-outline-info" id="answer3" onclick="selectAnswer(3)">@Model.QuestionAnswer.Answers[3].Answer</button>
+
+
+    @Html.BeginForm(new { @class = "gamePlayForm" })
+    {
+        @Html.HiddenFor(model => Model.TrainEligibilityModel.Train.RId)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Question)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[0].Answer)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[0].IsCorrect)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[1].Answer)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[1].IsCorrect)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[2].Answer)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[2].IsCorrect)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[3].Answer)
+        @Html.HiddenFor(model => Model.QuestionAnswer.Answers[3].IsCorrect)
+    }
+}
