@@ -1,0 +1,33 @@
+﻿@model List<MindTheGap.Models.GameHistory>
+
+@{
+    ViewBag.Title = "Game History";
+}
+
+<h2 class="text-center">Game History</h2>
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div>@ViewBag.ErrorMessage</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        @foreach (var history in Model)
+        {
+            <tr>
+                <td>@history.Train.FromStation</td>
+                <td>@history.Train.ToStation</td>
+                <td>@history.EndTime.ToString("dd MMM yyy")</td>
+                <td><a class="btn primary-btn" href="@Url.Action("ByTrain", "Leaderboard", new {id = history.Train.RId})">Leaderboard</a></td>
+            </tr>
+        }
+    </table>
+}

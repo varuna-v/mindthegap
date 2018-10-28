@@ -40,7 +40,7 @@ namespace MindTheGap.Controllers
                 leader.UserName = gameHistory.User.UserName;
                 leader.CorrectlyAnsweredCount = gameHistory.NumberAnsweredCorrectly;
                 leader.TotalNumberOfQuestionsAnswered = gameHistory.NumberOfQuestions;
-                leader.CorrectPercentage = gameHistory.CorrectPercentage;
+                leader.CorrectPercentage = (gameHistory.CorrectPercentage) + "%";
                 leader.IsCurrentUser = currentUser != null && currentUser.UserName == gameHistory.User.UserName;
                 leader.Rank = leader.CorrectPercentage == lastLeader.CorrectPercentage ? lastLeader.Rank : rank;                    
                 result.Leaders.Add(leader);

@@ -24,16 +24,25 @@ namespace MindTheGap.Controllers
             if (!new UserHelper().IsLoggedIn(this))
                 return RedirectToAction("Index", "Login");
             var stations = _trainStationRepository.GetTrainStations();
-            var selectListItems = stations.Select(s => new SelectListItem() { Value = s.Code, Text = s.StationName });
-            var selectList = new List<SelectListItem> { new SelectListItem() { Value = "", Text = "Select your station" } };
-            selectList.AddRange(selectListItems);
-            ViewBag.AllStationList = selectList;
+            var selectListItems = stations.Select(s => new SelectListItem() { Value = s.Code, Text = s.StationName }).ToList();
+            var fromSelectList = new List<SelectListItem> { new SelectListItem() { Value = "", Text = "Where does your journey start?"} };
+            fromSelectList.AddRange(selectListItems);
+            var toSelectList = new List<SelectListItem> { new SelectListItem() { Value = "", Text = "Where does your journey end?" }};
+            toSelectList.AddRange(selectListItems);
+            ViewBag.FromStationList = fromSelectList;
+            ViewBag.ToStationList = toSelectList;
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(JourneySelectionModel journey)
         {
+            if (journey == null || string.IsNullOrEmpty(journey.FromStationCode) ||
+                string.IsNullOrEmpty(journey.ToStationCode))
+            {
+                ViewBag.ErrorMessage = "Please select your stations.";
+                return View();
+            }
             Session["Journey"] = journey;
             return RedirectToAction("SelectTrain", "JourneySelection");
         }

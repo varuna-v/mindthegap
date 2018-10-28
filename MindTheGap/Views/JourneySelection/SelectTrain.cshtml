@@ -3,45 +3,48 @@
     ViewBag.Title = "Select Your Train";
 }
 
-<h2>Select Your Train</h2>
+<h2 class="text-center">Select Your Train</h2>
 
-<div class="container">
+<table class="table table-hover" style="margin-top: 35px;">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+            @*<th scope="col">Scheduled</th>*@
+            <th scope="col">Estimated</th>
+            <th scope="col">Delay</th>
+        </tr>
+    </thead>
+    <tbody>
 
-    @using (Html.BeginForm(new { @class = "selectTrainForm" }))
+        @foreach (var train in Model.Trains)
+        {
+            <tr id="@train.RId" class="text-center" onclick="selectTrain(this.id)">
+                <td>@train.FromStation</td>
+                <td>@train.ToStation</td>
+                @*<td>@train.ScheduledDepartureTimeFormatted</td>*@
+                <td>@train.EstimatedDepartureTimeFormatted</td>
+                <td>@train.DelayMinutes minutes</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm(new { @class = "selectTrainForm" }))
+{
+    for (int i = 0; i < Model.Trains.Count; i++)
     {
-        <div class="row">
-            <div class="col-2">From</div>
-            <div class="col-2">To</div>
-            <div class="col-3">Scheduled Departure Time</div>
-            <div class="col-3">Estimated Departure Time</div>
-            <div class="col-2">Delay Minutes</div>
-        </div>
-
-        foreach (var train in Model.Trains)
-        {
-            <div class="row" id="@train.RId" onclick="selectTrain(this.id)">
-                <div class="col-2">@train.FromStation</div>
-                <div class="col-2">@train.ToStation</div>
-                <div class="col-3">@train.ScheduledDepartureTimeFormatted</div>
-                <div class="col-3">@train.EstimatedDepartureTimeFormatted</div>
-                <div class="col-2">@train.DelayMinutes</div>
-            </div>
-        }
-        for (int i = 0; i < Model.Trains.Count; i++)
-        {
-            @Html.HiddenFor(model => Model.Trains[i].FromStation)
-            @Html.HiddenFor(model => Model.Trains[i].ToStation)
-            @Html.HiddenFor(model => Model.Trains[i].DelayMinutes)
-            @Html.HiddenFor(model => Model.Trains[i].EstimatedDepartureTime)
-            @Html.HiddenFor(model => Model.Trains[i].ScheduledDepartureTime)
-            @Html.HiddenFor(model => Model.Trains[i].EstimatedDepartureTimeFormatted)
-            @Html.HiddenFor(model => Model.Trains[i].ScheduledDepartureTimeFormatted)
-            @Html.HiddenFor(model => Model.Trains[i].RId)
-        }
-        @Html.TextBoxFor(m => m.SelectedRId, new { @class = "selectedRidBox", style = "display: none" })
-        <input type="submit" id="submitForm" style="display: none" value="Submit" />
+        @Html.HiddenFor(model => Model.Trains[i].FromStation)
+        @Html.HiddenFor(model => Model.Trains[i].ToStation)
+        @Html.HiddenFor(model => Model.Trains[i].DelayMinutes)
+        @Html.HiddenFor(model => Model.Trains[i].EstimatedDepartureTime)
+        @Html.HiddenFor(model => Model.Trains[i].ScheduledDepartureTime)
+        @Html.HiddenFor(model => Model.Trains[i].EstimatedDepartureTimeFormatted)
+        @Html.HiddenFor(model => Model.Trains[i].ScheduledDepartureTimeFormatted)
+        @Html.HiddenFor(model => Model.Trains[i].RId)
     }
-</div>
+    @Html.TextBoxFor(m => m.SelectedRId, new { @class = "selectedRidBox", style = "display: none" })
+    <input type="submit" id="submitForm" style="display: none" value="Submit" />
+}
 
 <script type="text/javascript">
     function selectTrain(rid) {

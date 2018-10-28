@@ -25,6 +25,8 @@ namespace MindTheGap.Repositories
 
         public GameHistory GetGameHistory(User user, TrainModel train)
         {
+            if (_gameHistory == null)
+                _gameHistory = new List<GameHistory>();
             var history = _gameHistory.FirstOrDefault(g =>
                 g.User.UserName == user.UserName && g.Train.RId == train.RId);
             return history;
@@ -32,7 +34,17 @@ namespace MindTheGap.Repositories
 
         public List<GameHistory> GetGameHistory(string trainRId)
         {
+            if (_gameHistory == null)
+                _gameHistory = new List<GameHistory>();
             var history = _gameHistory.Where(g => g.Train.RId == trainRId).OrderByDescending(g => g.CorrectPercentage).ToList();
+            return history;
+        }
+
+        public List<GameHistory> GetUserGameHistory(string userName)
+        {
+            if (_gameHistory == null)
+                _gameHistory = new List<GameHistory>();
+            var history = _gameHistory.Where(g => g.User.UserName == userName).OrderByDescending(g => g.EndTime).ToList();
             return history;
         }
     }

@@ -10,14 +10,23 @@
 }
 else if (Model != null)
 {
-    <div>Time to train: <span id="timeToTrainClock"></span></div>
-    <div>Answer the question in: <span id="answerTheQuestionInClock"></span></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="col-4">
+                <div class="circle" id="timeleft"></div>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
 
-    <div>@Model.QuestionAnswer.Question</div>
-    <button class="btn btn-outline-info" id="answer0" onclick="selectAnswer(0)">@Model.QuestionAnswer.Answers[0].Answer</button>
-    <button class="btn btn-outline-info" id="answer1" onclick="selectAnswer(1)">@Model.QuestionAnswer.Answers[1].Answer</button>
-    <button class="btn btn-outline-info" id="answer2" onclick="selectAnswer(2)">@Model.QuestionAnswer.Answers[2].Answer</button>
-    <button class="btn btn-outline-info" id="answer3" onclick="selectAnswer(3)">@Model.QuestionAnswer.Answers[3].Answer</button>
+    <div style="display: none">Answer the question in: <span id="answerTheQuestionInClock"></span></div>
+
+    <div class="question">@Model.QuestionAnswer.Question</div>
+    <button class="btn btn-outline-info btn-block answer" id="answer0" onclick="selectAnswer(0)">@Model.QuestionAnswer.Answers[0].Answer</button>
+    <button class="btn btn-outline-info btn-block answer" id="answer1" onclick="selectAnswer(1)">@Model.QuestionAnswer.Answers[1].Answer</button>
+    <button class="btn btn-outline-info btn-block answer" id="answer2" onclick="selectAnswer(2)">@Model.QuestionAnswer.Answers[2].Answer</button>
+    <button class="btn btn-outline-info btn-block answer" id="answer3" onclick="selectAnswer(3)">@Model.QuestionAnswer.Answers[3].Answer</button>
 
 
     using (Html.BeginForm())
@@ -37,9 +46,20 @@ else if (Model != null)
 
         <input type="submit" id="submitForm" style="display: none" value="Submit" />
     }
+    <div class="text-center text-muted" style="margin-top: 15px">Time to train: <span id="timeToTrainClock"></span></div>
 
 
     <script type="text/javascript">
+        var questionFinished = false;
+        function finishQuestion() {
+            questionFinished = true;
+            var button = $('#submitForm');
+            button.click();
+            $('#answer0').attr("disabled", "disabled");
+            $('#answer1').attr("disabled", "disabled");
+            $('#answer2').attr("disabled", "disabled");
+            $('#answer3').attr("disabled", "disabled");
+        }
 
         function selectAnswer(answerNumber) {
             var answerValue = $('#answer' + answerNumber).text();
@@ -77,22 +97,26 @@ else if (Model != null)
             var secondsToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60)) / 1000);
 
             var secondsToAnswerTheQuestionBy = Math.floor((distanceToAnswerTheQuestionBy % (1000 * 60)) / 1000);
-            var button = $('#submitForm');
 
             // If the count down is over, write some text
-            if (distanceToTrainArrival <= 0) {
-                clearInterval(x);
-                document.getElementById("clock").innerHTML = "EXPIRED";
-                button.click();
+            if (distanceToTrainArrival < 1000) {
+                finishQuestion();
             }
 
-            if (distanceToAnswerTheQuestionBy <= 0) {
-                button.click();
+            if (distanceToAnswerTheQuestionBy < 1000) {
+                finishQuestion();
             }
+            if (!questionFinished) {
+                if (distanceToTrainArrival < distanceToAnswerTheQuestionBy)
+                    $('#timeleft').text(secondsToTrainArrival);
+                else
+                    $('#timeleft').text(secondsToAnswerTheQuestionBy);
 
-            // Output the result in an element with id="demo"
-            document.getElementById("timeToTrainClock").innerHTML = hoursToTrainArrival + "h " + minutesToTrainArrival + "m " + secondsToTrainArrival + "s ";
-            document.getElementById("answerTheQuestionInClock").innerHTML = secondsToAnswerTheQuestionBy + "s ";
+                // Output the result in an element with id="demo"
+
+                document.getElementById("timeToTrainClock").innerHTML = hoursToTrainArrival + "h " + minutesToTrainArrival + "m " + secondsToTrainArrival + "s ";
+                document.getElementById("answerTheQuestionInClock").innerHTML = secondsToAnswerTheQuestionBy + "s ";
+            }
         }, 1000);
     </script>
 }

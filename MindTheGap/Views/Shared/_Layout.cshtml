@@ -8,28 +8,51 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <style>
+        .keyimg {
+            display: block;
+            max-width: 200%;
+            width: auto;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+    @if (ViewBag.Title != "Login")
+    {
         <div class="container">
-            <div class="navbar-header">
-                @if(ViewBag.Title != "Login"){
-                    @Html.ActionLink("Mind The Gap", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    if(Session["User"] is User)
+
+            <div class="row">
+                <div class="col-3">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="@Url.Content("~/Content/images/MindTheAppLogo.png")" class="keyimg" />
+                    </a>
+                </div>
+                <div class="col-6">
+                </div>
+                <div class="col-3"  style="padding-top: 24px">
+                    @if (Session["User"] is User)
                     {
-                        @Html.ActionLink("Logout", "Logout", "Login", new { area = "" }, new { @class = "navbar-brand" })
+                        <a href="@Url.Action("Logout", "Login")">
+                            <div class="btn btn-outline-info">
+                                Logout
+                            </div>
+                        </a>
                     }
                     else
                     {
-                        @Html.ActionLink("Login", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
+                        <a href="@Url.Action("Index", "Login")">
+                            <div class="btn btn-outline-info">
+                                Login
+                            </div>
+                        </a>
                     }
-                }
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-            </div>
+
         </div>
-    </div>
+    }
 
     <div class="container body-content">
         @RenderBody()

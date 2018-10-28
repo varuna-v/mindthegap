@@ -8,9 +8,9 @@ namespace MindTheGap.Models
 {
     public class JourneySelectionModel
     {
-        [Display(Name = "From Station")]
+        [Display(Name = "Where does your journey start?")]
         public string FromStationCode { get; set; }
-        [Display(Name = "To Station")]
+        [Display(Name = "Where does your journey end?")]
         public string ToStationCode { get; set; }
     }
 }

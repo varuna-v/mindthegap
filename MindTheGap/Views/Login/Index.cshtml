@@ -2,19 +2,24 @@
 @{
     ViewBag.Title = "Login";
 }
-<style>    .keyimg {
+<style>
+    .keyimg {
         display: block;
-        max-width:350px;
+        max-width: 80%;
         width: auto;
         height: auto;
     }
-
+    .default-logo {
+        display: none;
+    }
 </style>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm">
-            <img src="@Url.Content("~/Content/images/MindTheAppLogo.png")" class="keyimg"/>
+        <div class="col-3"></div>
+        <div class="col-8">
+            <img src="@Url.Content("~/Content/images/MindTheAppLogo.png")" class="keyimg" />
         </div>
+        <div class="col-1"></div>
     </div>
     <div class="row">
         <div class="col-sm text-center">
@@ -29,30 +34,15 @@
             }
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm text-center">
 
-            @using (Html.BeginForm("Index", "Login",
+
+    @using (Html.BeginForm("Index", "Login",
                         new { ReturnUrl = ViewBag.ReturnUrl },
                         FormMethod.Post, new { @class = "login-form" }))
-            {
-            
-                <div class="row text-center">
-                    @Html.TextBoxFor(m => m.UserName,new { @class = "form-control" ,placeholder = "Username"}) 
-                </div>
-                <br/>
-                <div class="row text-center">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                </div>
+    {
 
-                <br />
-                <div class="row">
-                    <div class="col-sm">
-                        <input type="submit" class="btn btn-success" value="Login / Sign up" />
-                    </div>
-                </div>
-}
-        </div>
-
-    </div>
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Username", style = "margin:20px; margin-left:0px;" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", style = "margin:20px; margin-left:0px;" })
+        <input type="submit" class="btn primary-btn btn-block" value="Login / Sign up" />
+    }
 </div>

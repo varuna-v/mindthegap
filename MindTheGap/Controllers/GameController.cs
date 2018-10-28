@@ -33,9 +33,6 @@ namespace MindTheGap.Controllers
 
             if (!eligibility.Eligible)
             {
-                ViewBag.ErrorMessage = "Your train is no longer available.";
-                Session["SelectedTrain"] = null;
-                Session["Journey"] = null;
                 return View();
             }
 
@@ -47,14 +44,33 @@ namespace MindTheGap.Controllers
         {
             var trainList = new TrainHelper().GetTrains(journey);
             if (trainList == null || !trainList.Any())
+            {
+                Session["SelectedTrain"] = null;
+                Session["Journey"] = null;
+                ViewBag.ErrorMessage = "Your train is no longer available.";
                 return new TrainEligibilityModel { Eligible = false };
+            }
             var latestTrainInfo = trainList.FirstOrDefault(t => t.RId == train.RId);
             if (latestTrainInfo == null)
+            {
+                Session["SelectedTrain"] = null;
+                Session["Journey"] = null;
+                ViewBag.ErrorMessage = "Your train is no longer available.";
                 return new TrainEligibilityModel { Eligible = false };
+            }
             if ((latestTrainInfo.EstimatedDepartureTime - latestTrainInfo.ScheduledDepartureTime).TotalSeconds < 60)
+            {
+                ViewBag.ErrorMessage = "Your train is not delayed.";
                 return new TrainEligibilityModel { Eligible = false };
-            if ((DateTime.Now - latestTrainInfo.EstimatedDepartureTime).TotalSeconds > -10)
+            }
+
+            var now = DateTime.Now;
+            if ((now - latestTrainInfo.EstimatedDepartureTime).TotalSeconds > -10)
+            {
+                ViewBag.ErrorMessage = "Your train is already on it's way.";
                 return new TrainEligibilityModel { Eligible = false };
+            }
+
 
 
             return new TrainEligibilityModel
@@ -141,7 +157,9 @@ namespace MindTheGap.Controllers
             model.NumberOfQuestions = history.NumberOfQuestions;
             var duration = (history.EndTime - history.StartTime);
             model.TotalDuration = duration.Hours + ":" + duration.Minutes + ":" + duration.Seconds;
-            return View(model);
+            model.TrainRid = selectedTrain.RId;
+            //return View(model);
+            return RedirectToAction("ByTrain", "Leaderboard", new { id = selectedTrain.RId });
         }
     }
 }

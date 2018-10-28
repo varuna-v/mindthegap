@@ -8,44 +8,47 @@ namespace MindTheGap.Helpers
 {
     public class TrainHelper
     {
+        private Random rand = new Random();
+        private static KeyValuePair<DateTime, List<TrainModel>> TrainCache { get; set; }
+        private static Object synclock = new Object();
         public List<TrainModel> GetTrains(JourneySelectionModel journey)
         {
-            return new List<TrainModel>()
+            var time = DateTime.Now;
+
+            if (!TrainCache.Equals(default(KeyValuePair<DateTime, List<TrainModel>>)) && TrainCache.Key > time &&
+                TrainCache.Value != null)
+                return TrainCache.Value;
+
+
+            lock (synclock)
             {
-                new TrainModel()
+                if (!TrainCache.Equals(default(KeyValuePair<DateTime, List<TrainModel>>)) && TrainCache.Key > time &&
+                    TrainCache.Value != null)
+                    return TrainCache.Value;
+
+                var result = new List<TrainModel>();
+                for (int i = 0; i < 5; i++)
                 {
-                    FromStation = "MAN",
-                    ToStation = "MIA",
-                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 1, 8, 0),
-                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 1, 9, 30),
-                    RId = "123456"
-                },
-                new TrainModel()
-                {
-                    FromStation = "MAN",
-                    ToStation = "MIA",
-                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 0, 7, 0),
-                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 0, 9, 0),
-                    RId = "ABCDEF"
-                },
-                new TrainModel()
-                {
-                    FromStation = "MAN",
-                    ToStation = "MIA",
-                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 6, 37, 0),
-                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 6, 39, 0),
-                    RId = "HIJK"
-                },
-                new TrainModel()
-                {
-                    FromStation = "MAN",
-                    ToStation = "MIA",
-                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 2, 7, 0),
-                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 2, 45, 0),
-                    RId = "LMNO"
+                    var delay = rand.Next(60, 180);
+                    var model = new TrainModel()
+                    {
+                        FromStation = journey.FromStationCode,
+                        ToStation = journey.ToStationCode,
+                        ScheduledDepartureTime = time,
+                        EstimatedDepartureTime = time.AddSeconds(delay),
+                        RId = Guid.NewGuid().ToString()
+                    };
+                    result.Add(model);
+                    time = time.AddMinutes(2);
                 }
-            };
+                TrainCache = new KeyValuePair<DateTime, List<TrainModel>>(time.AddMinutes(15), result);
+                return result;
+
+            }
+
+
         }
+
         public List<TrainModel> GetRealTrains(JourneySelectionModel journey)
         {
             var client = new LDBSVServiceSoapClient();

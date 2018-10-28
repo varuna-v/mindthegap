@@ -4,7 +4,7 @@
     ViewBag.Title = "Start Game";
 }
 
-<h2>Start Game</h2>
+<h2 class="text-center">Start Game</h2>
 
 
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
@@ -13,8 +13,13 @@
 }
 else
 {
-    <p id="clock"></p>
-    <a href="@Url.Action("Start", "Game")" class="btn btn-success" id="btnPlay">Play!</a>
+    <h4 class="text-center">
+        Your train will be here in:
+    </h4>
+    <div class="text-center">
+        <p class="btn btn-outline-info btn-lg" id="clock"></p>
+    </div>
+    <a href="@Url.Action("Start", "Game")" class="btn primary-btn btn-block" id="btnPlay">Play!</a>
 
                                                                                
     <script type="text/javascript">

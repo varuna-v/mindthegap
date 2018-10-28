@@ -7,5 +7,6 @@ namespace MindTheGap.Models
         public int NumberOfQuestions { get; set; }
         public int NumberAnsweredCorrectly { get; set; }
         public string TotalDuration { get; set; }
+        public string TrainRid { get; set; }
     }
 }

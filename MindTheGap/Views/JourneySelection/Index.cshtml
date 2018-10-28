@@ -4,19 +4,15 @@
     ViewBag.Title = "Select Your Journey";
 }
 
-<h2>Select Your Journey</h2>
+<h2 class="text-center">Select Your Journey</h2>
 
-<div>
-    @using (Html.BeginForm())
-    {
-        @Html.LabelFor(x => x.FromStationCode)
-        @Html.DropDownListFor(x => x.FromStationCode,
-            (IEnumerable<SelectListItem>)ViewBag.AllStationList, new { @class = "form-control" })
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(x => x.FromStationCode,
+            (IEnumerable<SelectListItem>)ViewBag.FromStationList, new { @class = "form-control", style = "margin:20px; margin-left:0px;" })
 
-        @Html.LabelFor(x => x.ToStationCode)
-        @Html.DropDownListFor(x => x.ToStationCode,
-            (IEnumerable<SelectListItem>)ViewBag.AllStationList, new { @class = "form-control" })
 
-        <input type="submit" value="Go" />
-    }
-</div>
+    @Html.DropDownListFor(x => x.ToStationCode,
+            (IEnumerable<SelectListItem>)ViewBag.ToStationList, new { @class = "form-control", style = "margin:20px; margin-left:0px;" })
+    <input type="submit" class="btn primary-btn btn-block" value="Next" />
+}

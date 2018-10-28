@@ -4,27 +4,29 @@
     ViewBag.Title = "Leader Board";
 }
 
-<h2>Leader Board</h2>
+<h2 class="text-center">Leader Board</h2>
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
 {
     <div>@ViewBag.ErrorMessage</div>
 }
 else
 {
-    <div>Updated At: @Model.ComputedAt.ToString("dd MMM yyyy HH:mm")</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-4">Rank</div>
-            <div class="col-4">User</div>
-            <div class="col-4">Strike Rate</div>
-        </div>
+    <div class="text-right text-muted" style="margin-top: 35px;">@Model.ComputedAt.ToString("dd MMM yyyy HH:mm")</div>
+    <table class="table">
+        <thead>
+            <tr class="text-center">
+                <th scope="col">Rank</th>
+                <th scope="col">User</th>
+                <th scope="col">Strike Rate</th>
+            </tr>
+        </thead>
         @foreach (var leader in Model.Leaders)
-        {
-            <div class='row @(leader.IsCurrentUser ? "bg-success" : "")'>
-                <div class="col-4">@leader.Rank</div>
-                <div class="col-4">@leader.UserName</div>
-                <div class="col-2">@leader.CorrectPercentage</div>
-            </div>
+                {
+            <tr style='@(leader.IsCurrentUser ? "background-color: lightgreen;" : "")'>
+                <td>@leader.Rank</td>
+                <td>@leader.UserName</td>
+                <td>@leader.CorrectPercentage</td>
+            </tr>
         }
-    </div>
+    </table>
 }

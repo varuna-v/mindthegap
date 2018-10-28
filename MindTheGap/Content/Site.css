@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 20px;
     background-color:#FFFFFF;
 }
@@ -11,9 +11,38 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+.primary-btn {
+    background-color: #2F6485;
+    color: white;
 }
 
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    background: maroon;
+}
+
+.question {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-radius: 10px;
+    border-color: maroon;
+    border: 1px solid;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.answer {
+    margin-top: 10px;
+    white-space: normal;
+}

@@ -14,6 +14,7 @@ namespace MindTheGap.Controllers
 
         public ActionResult Index()
         {
+            //return RedirectToAction("Index", "JourneySelection");
             return View();
         }
     }
