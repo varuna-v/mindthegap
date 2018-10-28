@@ -8,7 +8,7 @@
 {
     <div>@ViewBag.ErrorMessage</div>
 }
-else
+else if (Model != null)
 {
     <div>Time to train: <span id="timeToTrainClock"></span></div>
     <div>Answer the question in: <span id="answerTheQuestionInClock"></span></div>
@@ -20,7 +20,7 @@ else
     <button class="btn btn-outline-info" id="answer3" onclick="selectAnswer(3)">@Model.QuestionAnswer.Answers[3].Answer</button>
 
 
-    @Html.BeginForm()
+    using (Html.BeginForm())
     {
         @Html.HiddenFor(model => Model.TrainEligibilityModel.Train.RId)
         @Html.HiddenFor(model => Model.QuestionAnswer.Question)
@@ -37,61 +37,63 @@ else
 
         <input type="submit" id="submitForm" style="display: none" value="Submit" />
     }
+
+
+    <script type="text/javascript">
+
+        function selectAnswer(answerNumber) {
+            var answerValue = $('#answer' + answerNumber).text();
+            for (var i = 0; i < 4; i++) {
+                $('#answer' + i).removeClass('btn-outline-info');
+                $('#answer' + i).removeClass('btn-info');
+
+                if (i === answerNumber) {
+                    $('#answer' + i).addClass('btn-info');
+                } else {
+                    $('#answer' + i).addClass('btn-outline-info');
+                }
+            }
+            $(".selectedAnswer").val(answerValue);
+
+        }
+        // Set the date we're counting down to
+        var trainArrivalDate = new Date('@Model.TrainEligibilityModel.EligibilityEndTime.ToString("dd MMM yyyy HH:mm:ss")').getTime();
+        var answerTheQuestionByDate = new Date();
+        answerTheQuestionByDate.setSeconds(answerTheQuestionByDate.getSeconds() + 16);
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distanceToTrainArrival = trainArrivalDate - now;
+            var distanceToAnswerTheQuestionBy = answerTheQuestionByDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hoursToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutesToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60 * 60)) / (1000 * 60));
+            var secondsToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60)) / 1000);
+
+            var secondsToAnswerTheQuestionBy = Math.floor((distanceToAnswerTheQuestionBy % (1000 * 60)) / 1000);
+            var button = $('#submitForm');
+
+            // If the count down is over, write some text
+            if (distanceToTrainArrival <= 0) {
+                clearInterval(x);
+                document.getElementById("clock").innerHTML = "EXPIRED";
+                button.click();
+            }
+
+            if (distanceToAnswerTheQuestionBy <= 0) {
+                button.click();
+            }
+
+            // Output the result in an element with id="demo"
+            document.getElementById("timeToTrainClock").innerHTML = hoursToTrainArrival + "h " + minutesToTrainArrival + "m " + secondsToTrainArrival + "s ";
+            document.getElementById("answerTheQuestionInClock").innerHTML = secondsToAnswerTheQuestionBy + "s ";
+        }, 1000);
+    </script>
 }
 
-
-<script type="text/javascript">
-
-    function selectAnswer(answerNumber) {
-        var answerValue = $('#answer' + answerNumber).text();
-        for (var i = 0; i < 4; i++) {
-            $('#answer' + i).removeClass('btn-outline-info');
-            $('#answer' + i).removeClass('btn-info');
-
-            if (i === answerNumber) {
-                $('#answer' + i).addClass('btn-info');
-            } else {
-                $('#answer' + i).addClass('btn-outline-info');
-            }
-        }
-        $(".selectedAnswer").val(answerValue);
-
-    }
-    // Set the date we're counting down to
-    var trainArrivalDate = new Date('@Model.TrainEligibilityModel.EligibilityEndTime.ToString("dd MMM yyyy HH:mm:ss")').getTime();
-    var answerTheQuestionByDate = new Date();
-    answerTheQuestionByDate.setSeconds(answerTheQuestionByDate.getSeconds() + 16);
-// Update the count down every 1 second
-    var x = setInterval(function() {
-
-        // Get todays date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distanceToTrainArrival = trainArrivalDate - now;
-        var distanceToAnswerTheQuestionBy = answerTheQuestionByDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        //var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hoursToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutesToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60 * 60)) / (1000 * 60));
-        var secondsToTrainArrival = Math.floor((distanceToTrainArrival % (1000 * 60)) / 1000);
-
-        var secondsToAnswerTheQuestionBy = Math.floor((distanceToAnswerTheQuestionBy % (1000 * 60)) / 1000);
-
-        // Output the result in an element with id="demo"
-        document.getElementById("timeToTrainClock").innerHTML = hoursToTrainArrival + "h " + minutesToTrainArrival + "m " + secondsToTrainArrival + "s ";
-        document.getElementById("answerTheQuestionInClock").innerHTML = secondsToAnswerTheQuestionBy + "s ";
-
-        // If the count down is over, write some text
-        if (distanceToTrainArrival < 0) {
-            clearInterval(x);
-            document.getElementById("clock").innerHTML = "EXPIRED";
-        }
-
-        if (distanceToAnswerTheQuestionBy <= 0) {
-            var button = $('#submitForm');
-            button.click();
-        }
-    }, 1000);
-</script>

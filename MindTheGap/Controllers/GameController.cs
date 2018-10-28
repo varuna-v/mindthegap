@@ -101,7 +101,8 @@ namespace MindTheGap.Controllers
                 return RedirectToAction("Index", "JourneySelection");
 
             var eligibility = GetEligibility(journey, selectedTrain);
-            var correctlyAnswered = model.QuestionAnswer.Answers.First(a => a.Answer == model.SelectedAnswer).IsCorrect;
+            var selectedAnswer = model.QuestionAnswer.Answers.FirstOrDefault(a => a.Answer == model.SelectedAnswer);
+            var correctlyAnswered = selectedAnswer == null ? false : selectedAnswer.IsCorrect;
             var response = new QuestionAnswerResponseModel
             {
                 Answers = model.QuestionAnswer.Answers,
