@@ -29,5 +29,11 @@ namespace MindTheGap.Repositories
                 g.User.UserName == user.UserName && g.Train.RId == train.RId);
             return history;
         }
+
+        public List<GameHistory> GetGameHistory(string trainRId)
+        {
+            var history = _gameHistory.Where(g => g.Train.RId == trainRId).OrderByDescending(g => g.CorrectPercentage).ToList();
+            return history;
+        }
     }
 }

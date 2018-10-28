@@ -137,8 +137,8 @@ namespace MindTheGap.Controllers
                 return RedirectToAction("Index", "JourneySelection");
 
             var model = new GameCompletionModel();
-            model.NumberAnsweredCorrectly = history.QuestionAnswerResponseModel.Count(m => m.CorrectlyAnswered);
-            model.NumberOfQuestions = history.QuestionAnswerResponseModel.Count;
+            model.NumberAnsweredCorrectly = history.NumberAnsweredCorrectly;
+            model.NumberOfQuestions = history.NumberOfQuestions;
             var duration = (history.EndTime - history.StartTime);
             model.TotalDuration = duration.Hours + ":" + duration.Minutes + ":" + duration.Seconds;
             return View(model);

@@ -479,6 +479,7 @@
     <Compile Include="Models\GameCompletionModel.cs" />
     <Compile Include="Models\GameHistory.cs" />
     <Compile Include="Models\JourneySelectionModel.cs" />
+    <Compile Include="Models\LeaderboardModel.cs" />
     <Compile Include="Models\TrainEligibilityModel.cs" />
     <Compile Include="Models\TrainModel.cs" />
     <Compile Include="Models\TrainStation.cs" />
@@ -493,6 +494,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\LeaderboardController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -503,6 +505,7 @@
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Game\Complete.cshtml" />
+    <Content Include="Views\Leaderboard\ByTrain.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

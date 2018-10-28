@@ -32,8 +32,8 @@ namespace MindTheGap.Helpers
                 {
                     FromStation = "MAN",
                     ToStation = "MIA",
-                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 1, 10, 0),
-                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 1, 25, 0),
+                    ScheduledDepartureTime = new DateTime(2018, 10, 28, 6, 37, 0),
+                    EstimatedDepartureTime = new DateTime(2018, 10, 28, 6, 39, 0),
                     RId = "HIJK"
                 },
                 new TrainModel()
